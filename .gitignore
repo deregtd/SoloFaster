@@ -1,0 +1,6 @@
+*.zip
+*.ncrunchsolution
+*.user
+*.suo
+bin
+obj

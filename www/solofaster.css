@@ -1,0 +1,32 @@
+body,html {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	overflow: auto;
+	background: #eee;
+
+	font: 14px arial;
+	color: #333;
+}
+
+div.container {
+	margin: 50px auto 20px auto;
+	width: 850px;
+}
+
+div.head {
+	text-align: center;
+	font-weight: bold;
+	font-size: 48px;
+}
+
+div.main {
+	
+}
+
+div.main div.sechead {
+	margin-top: 20px;
+	font-size: 18px;
+	font-weight: bold;
+	padding-left: 20px;
+}
