@@ -102,7 +102,7 @@ namespace SoloFaster
         {
             //COM port list...
             gpsComPortMenuItem.DropDownItems.Clear();
-            foreach (string portName in System.IO.Ports.SerialPort.GetPortNames())
+            foreach (string portName in getCOMPortList())
             {
                 ToolStripItem item = gpsComPortMenuItem.DropDownItems.Add(portName);
                 item.Click += new EventHandler(ComPortSelectedClick);
@@ -130,6 +130,23 @@ namespace SoloFaster
         private void SaveSettings()
         {
             //I'm sure something will go here eventually...
+        }
+
+        private string[] getCOMPortList()
+        {
+            string[] startArr = System.IO.Ports.SerialPort.GetPortNames();
+            for (int i = 0; i < startArr.Length; i++)
+            {
+                for (int h = 3; h < startArr[i].Length; h++)
+                {
+                    if (!char.IsNumber(startArr[i][h]))
+                    {
+                        startArr[i] = startArr[i].Substring(0, h);
+                        break;
+                    }
+                }
+            }
+            return startArr;
         }
 
         // ----------------------- RUN ANALYSIS ---------------------------
@@ -698,7 +715,7 @@ namespace SoloFaster
         {
             lock (portScanList)
             {
-                portScanList.AddRange(System.IO.Ports.SerialPort.GetPortNames());
+                portScanList.AddRange(getCOMPortList());
             }
         }
 
@@ -713,7 +730,7 @@ namespace SoloFaster
                 gps = null;
             }
 
-            gps = new GPS((string)portName, 57600);
+            gps = new GPS((string)portName, 115200);
             gps.positionUpdate += GPSPositionUpdate;
             gps.satelliteUpdate += SatUpdateCallback;
 
@@ -739,7 +756,7 @@ namespace SoloFaster
                         lock (portScanList)
                         {
                             if (portScanList.Count == 0)
-                                portScanList.AddRange(System.IO.Ports.SerialPort.GetPortNames());
+                                portScanList.AddRange(getCOMPortList());
 
                             if (portScanList.Count > 0)
                             {
